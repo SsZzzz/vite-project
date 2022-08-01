@@ -6,7 +6,7 @@
     "eslint --fix",
     "prettier --cache --write"
   ],
-  "*.{css,less}": [
+  "*.{css,less,scss}": [
     "stylelint --fix",
     "prettier --cache --write"
   ]
