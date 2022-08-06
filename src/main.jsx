@@ -1,3 +1,4 @@
+import '@icon-park/react/styles/index.css';
 import { ConfigProvider } from 'antd';
 import 'antd/dist/antd.css';
 import zhCN from 'antd/es/locale/zh_CN';
