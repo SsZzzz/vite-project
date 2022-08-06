@@ -1,6 +1,6 @@
 import { Lock, User } from '@icon-park/react';
 import { Button, Form, Input } from 'antd';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 
 export default () => {
   function onFinish() {}

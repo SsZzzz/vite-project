@@ -1,6 +1,6 @@
 import { Menu } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 
 const items = [
   {

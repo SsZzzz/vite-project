@@ -7,7 +7,7 @@ import 'moment/dist/locale/zh-cn';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import './index.scss';
+import './index.less';
 import App from './pages/index';
 
 moment.locale('zh-cn');
