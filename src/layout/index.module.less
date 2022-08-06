@@ -10,13 +10,22 @@
   align-items: center;
   height: 46px;
   padding: 0 24px;
-  background-color: #2c303a;
+  background-color: #3e424f;
 
   :global {
     .ant-menu.ant-menu-dark,
     .ant-menu-dark .ant-menu-sub,
     .ant-menu.ant-menu-dark .ant-menu-sub {
-      background-color: #2c303a;
+      background-color: #3e424f;
+    }
+
+    .ant-menu.ant-menu-dark .ant-menu-item-selected,
+    .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+      background: linear-gradient(to bottom, #2d3039 95%, #2855f0 5%);
+    }
+
+    .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+      background-color: transparent;
     }
   }
 }
