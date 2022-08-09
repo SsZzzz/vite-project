@@ -11,6 +11,10 @@ const items = [
     label: '表格查询',
     key: '/queryTable',
   },
+  {
+    label: '地图',
+    key: '/map',
+  },
 ];
 
 export default () => {
