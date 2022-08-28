@@ -12,12 +12,12 @@ import {
 export default ({ start, end }) => {
   const [pointData, setPointData] = useState(getPointData());
 
-  const [routeData, bearingList] = useMemo(() => {
+  const [routeData, coordinates, bearingList] = useMemo(() => {
     const routeData = getBezierRouteData(start, end);
+    const coordinates = routeData.features[0].geometry.coordinates;
     const bearingList = getBearingList(routeData);
-    return [routeData, bearingList];
+    return [routeData, coordinates, bearingList];
   }, [start, end]);
-  const coordinates = routeData.features[0].geometry.coordinates;
 
   useEffect(() => {
     animate(0);
