@@ -17,5 +17,6 @@ module.exports = {
     'react/jsx-uses-react': 0,
     'react/display-name': 0,
     'no-console': 2,
+    'react/prop-types': 0,
   },
 };

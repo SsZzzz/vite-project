@@ -12,8 +12,12 @@ const items = [
     key: '/queryTable',
   },
   {
-    label: '地图',
+    label: '地图(交通路线)',
     key: '/map',
+  },
+  {
+    label: '地图(flyLine)',
+    key: '/map2',
   },
 ];
 

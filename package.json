@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@icon-park/react": "^1.4.2",
+    "@turf/turf": "^6.5.0",
     "antd": "^4.22.3",
     "lodash-es": "^4.17.21",
     "mapbox-gl": "^2.9.2",
