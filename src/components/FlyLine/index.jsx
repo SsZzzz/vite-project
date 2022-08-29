@@ -9,7 +9,7 @@ import {
   routeLayerProps,
 } from './utils';
 
-export default ({ start, end }) => {
+export default ({ id, start, end }) => {
   const [pointData, setPointData] = useState(getPointData());
 
   const [routeData, coordinates, bearingList] = useMemo(() => {
@@ -34,11 +34,11 @@ export default ({ start, end }) => {
 
   return (
     <>
-      <Source id="routeData" type="geojson" data={routeData}>
-        <Layer {...routeLayerProps} />
+      <Source id={`routeData-${id}`} type="geojson" data={routeData}>
+        <Layer {...routeLayerProps} id={`route-${id}`} />
       </Source>
-      <Source id="pointData" type="geojson" data={pointData}>
-        <Layer {...pointLayerProps} />
+      <Source id={`pointData-${id}`} type="geojson" data={pointData}>
+        <Layer {...pointLayerProps} id={`point-${id}`} />
       </Source>
     </>
   );

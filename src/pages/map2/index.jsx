@@ -1,6 +1,6 @@
 import FlyLine from '@/components/FlyLine';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Map from 'react-map-gl';
+import Map, { Marker } from 'react-map-gl';
 
 export default () => {
   return (
@@ -10,7 +10,9 @@ export default () => {
       initialViewState={{ longitude: 120, latitude: 30.2, zoom: 8 }}
       mapboxAccessToken="pk.eyJ1IjoibWVuZGlhIiwiYSI6ImNra2Zja2duaTAzMmoydnAxZW1qdHN4c2oifQ.YIgSVnH9h0g5vfLAM-MNhQ"
     >
-      <FlyLine start={[121, 30]} end={[119, 30]} />
+      <Marker longitude={121} latitude={30} color="#2855f0" />
+      <Marker longitude={119} latitude={30} color="#2855f0" />
+      <FlyLine id="flyLine" start={[121, 30]} end={[119, 30]} />
     </Map>
   );
 };
