@@ -41,13 +41,8 @@ export function getBezierRouteData(start, end, step = 1000, offset = 6) {
   ]);
   // 根据起点,偏移的中点,和终点,得到贝塞尔曲线,但这个曲线不能直接用,因为每个点间隔的距离不一样,动画会一顿一顿的
   const bezierRouteData = turf.bezierSpline(bezierLineString);
-  let bezierRouteDistance = 0;
-  const bezierRouteCoordinates = bezierRouteData.geometry.coordinates;
-  for (let i = 0; i < bezierRouteCoordinates.length - 1; i++) {
-    const from = turf.point(bezierRouteCoordinates[i]);
-    const to = turf.point(bezierRouteCoordinates[i + 1]);
-    bezierRouteDistance += turf.distance(from, to);
-  }
+  // 得到这条曲线的长度
+  const bezierRouteDistance = turf.length(bezierRouteData);
   // 通过turf.along,使贝塞尔曲线中每个点间隔的距离长度都一致
   const routeCoordinates = [];
   for (
