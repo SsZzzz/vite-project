@@ -1,6 +1,7 @@
 import * as turf from '@turf/turf';
 
 export const routeLayerProps = {
+  id: 'route',
   type: 'line',
   layout: {
     'line-join': 'round',
@@ -13,6 +14,7 @@ export const routeLayerProps = {
 };
 
 export const pointLayerProps = {
+  id: 'point',
   type: 'symbol',
   layout: {
     'icon-image': 'car',
@@ -22,8 +24,19 @@ export const pointLayerProps = {
   },
 };
 
+export function getMultiBezierRouteData(startEndList, step, offset) {
+  const routeData = {
+    type: 'FeatureCollection',
+    features: [],
+  };
+  for (const { start, end } of startEndList) {
+    routeData.features.push(getBezierRouteData(start, end, step, offset));
+  }
+  return routeData;
+}
+
 // start是起点的经纬度.如[120,30],end是终点的经纬度,step是要在起点和终点中分隔出多少个点,越大动画越慢,offset是偏移的大小,越大贝塞尔曲线曲率越小
-export function getBezierRouteData(start, end, step = 1000, offset = 6) {
+function getBezierRouteData(start, end, step, offset) {
   const originLineString = turf.lineString([start, end]);
   const from = turf.point(start);
   const to = turf.point(end);
@@ -56,47 +69,56 @@ export function getBezierRouteData(start, end, step = 1000, offset = 6) {
   // 由于小数精度问题,最后一个点加不上去,手动再加一下
   routeCoordinates.push(end);
 
-  const routeData = {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: routeCoordinates,
-        },
-      },
-    ],
+  return {
+    type: 'Feature',
+    geometry: {
+      type: 'LineString',
+      coordinates: routeCoordinates,
+    },
   };
-
-  return routeData;
 }
 
-export function getBearingList(routeData) {
-  const coordinates = routeData.features[0].geometry.coordinates;
-  const bearingList = [];
+export function getMultiBearings(routeData) {
+  const bearingsList = [];
+  for (const feature of routeData.features) {
+    const coordinates = feature.geometry.coordinates;
+    bearingsList.push(getBearings(coordinates));
+  }
+  return bearingsList;
+}
+
+function getBearings(coordinates) {
+  const bearings = [];
   for (let i = 0; i < coordinates.length - 1; i++) {
-    bearingList.push(
+    bearings.push(
       turf.bearing(turf.point(coordinates[i + 1]), turf.point(coordinates[i])),
     );
   }
-  bearingList.push(bearingList[bearingList.length - 1]);
+  bearings.push(bearings[bearings.length - 1]);
 
-  return bearingList;
+  return bearings;
 }
 
-export function getPointData(coordinates = [], properties = {}) {
-  return {
+export function getMultiPointData(routeData, bearingsList, i) {
+  const pointData = {
     type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties,
-        geometry: {
-          type: 'Point',
-          coordinates,
-        },
-      },
-    ],
+    features: [],
   };
+  if (!routeData || !bearingsList || i === undefined) {
+    return pointData;
+  }
+  for (let k = 0; k < routeData.features.length; k++) {
+    const coordinates = routeData.features[k].geometry.coordinates;
+    const bearings = bearingsList[k];
+    const featureObj = {
+      type: 'Feature',
+      properties: { bearing: bearings[i] },
+      geometry: {
+        type: 'Point',
+        coordinates: coordinates[i],
+      },
+    };
+    pointData.features.push(featureObj);
+  }
+  return pointData;
 }

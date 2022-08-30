@@ -12,7 +12,22 @@ export default () => {
     >
       <Marker longitude={121} latitude={30} color="#2855f0" />
       <Marker longitude={119} latitude={30} color="#2855f0" />
-      <FlyLine id="flyLine" start={[121, 30]} end={[119, 30]} />
+      <FlyLine
+        startEndList={[
+          {
+            start: [121, 30],
+            end: [119, 30],
+            isShowPopup: true,
+            text: 123,
+          },
+          {
+            start: [120, 30],
+            end: [119, 31],
+            isShowPopup: true,
+            text: 456,
+          },
+        ]}
+      />
     </Map>
   );
 };
