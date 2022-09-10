@@ -11,14 +11,6 @@ const items = [
     label: '表格查询',
     key: '/queryTable',
   },
-  {
-    label: '地图(交通路线)',
-    key: '/map',
-  },
-  {
-    label: '地图(flyLine)',
-    key: '/map2',
-  },
 ];
 
 export default () => {

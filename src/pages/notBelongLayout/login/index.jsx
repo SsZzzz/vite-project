@@ -1,9 +1,14 @@
 import { Lock, User } from '@icon-park/react';
 import { Button, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.less';
 
 export default () => {
-  function onFinish() {}
+  const navigate = useNavigate();
+
+  function onFinish() {
+    navigate('/home');
+  }
 
   return (
     <div className={styles.loginContainer}>
