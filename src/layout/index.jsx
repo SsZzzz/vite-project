@@ -4,14 +4,6 @@ import styles from './index.module.less';
 
 const items = [
   {
-    label: '首页',
-    key: '/home',
-  },
-  {
-    label: '表格查询',
-    key: '/queryTable',
-  },
-  {
     label: '地图(交通路线)',
     key: '/map',
   },
