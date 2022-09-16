@@ -1,3 +1,47 @@
 #root {
   height: 100%;
 }
+
+.ant-form-inline .ant-form-item {
+  margin-bottom: 16px !important;
+}
+
+/* 定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸 */
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+/* 定义滚动条的轨道，内阴影及圆角 */
+
+/* 
+*::-webkit-scrollbar-track {
+  background-color: rgb(230 230 230 / 20%);
+  border-radius: 10px;
+} 
+
+*:hover::-webkit-scrollbar-track {
+  background-color: rgb(230 230 230 / 60%);
+}
+*/
+
+/* 定义滑块，内阴影及圆角 */
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(190 190 190);
+  border-radius: 10px;
+  transition: background-color 0.5s;
+}
+
+/* hover 整个容器的时候的颜色 */
+*:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(180 180 180);
+}
+
+/* hover 滑块的颜色 */
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(160 160 160);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: rgb(120 120 120);
+}
