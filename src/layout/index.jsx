@@ -11,6 +11,10 @@ const items = [
     label: '地图(flyLine)',
     key: '/map2',
   },
+  {
+    label: '地图(离线地图)',
+    key: '/map3',
+  },
 ];
 
 export default () => {
