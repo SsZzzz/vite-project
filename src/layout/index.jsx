@@ -21,7 +21,6 @@ export default () => {
     <div className={styles.layoutContainer}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <img src="/logo.svg" alt="logo" />
           <span>同盾科技政企研发后台模板</span>
         </div>
         <Menu

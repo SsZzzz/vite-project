@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -7,16 +7,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      less: {
-        modifyVars: {
-          '@primary-color': '#2855f0',
-        },
-        javascriptEnabled: true,
-      },
     },
   },
 });

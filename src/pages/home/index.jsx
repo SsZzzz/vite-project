@@ -1,3 +1,5 @@
+import styles from './index.module.less';
+
 export default () => {
-  return <div>home</div>;
+  return <div className={styles.text}>home</div>;
 };

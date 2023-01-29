@@ -1,5 +1,5 @@
 import { Button, DatePicker, Form, Input, Table } from 'antd';
-import Store from './store';
+import { StoreProvider, useStore } from './store';
 
 const columns = [
   { title: 'id', dataIndex: 'id' },
@@ -15,7 +15,7 @@ const columns = [
 ];
 
 function App() {
-  const { params, setParams, data, loading } = Store.useContainer();
+  const { params, setParams, data, loading } = useStore();
   const [form] = Form.useForm();
 
   function onFinish(values) {
@@ -63,7 +63,7 @@ function App() {
 }
 
 export default () => (
-  <Store.Provider>
+  <StoreProvider>
     <App />
-  </Store.Provider>
+  </StoreProvider>
 );

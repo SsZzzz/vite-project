@@ -1,9 +1,9 @@
 import { useRequest } from 'ahooks';
+import { createStore } from 'hox';
 import { useState } from 'react';
-import { createContainer } from 'unstated-next';
 import service from './service';
 
-function useStore() {
+export const [useStore, StoreProvider] = createStore(() => {
   const [params, setParams] = useState({ current: 1, pageSize: 10 });
 
   const { data, loading } = useRequest(() => service.query(params), {
@@ -11,6 +11,4 @@ function useStore() {
   });
 
   return { params, setParams, data, loading };
-}
-
-export default createContainer(useStore);
+});
