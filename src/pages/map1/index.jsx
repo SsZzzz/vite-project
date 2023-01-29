@@ -54,7 +54,7 @@ export default () => {
   return (
     <Map
       style={{ width: '100%', height: '100%' }}
-      mapStyle="mapbox://styles/mendia/cl6hn8tcp000f14mgtmvzbuj5"
+      mapStyle="mapbox://styles/mendia/cld9klj6z006201p4h9kjdlgv"
       ref={mapRef}
       initialViewState={{ longitude: 120, latitude: 30.2, zoom: 8 }}
       mapboxAccessToken="pk.eyJ1IjoibWVuZGlhIiwiYSI6ImNra2Zja2duaTAzMmoydnAxZW1qdHN4c2oifQ.YIgSVnH9h0g5vfLAM-MNhQ"
