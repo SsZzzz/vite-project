@@ -12,13 +12,13 @@ import QueryTable from './pages/queryTable';
 // }));
 
 export default [
-  { path: '/login', element: <Login /> },
+  { path: 'login', element: <Login /> },
   {
     path: '/',
     element: <Layout />,
     children: [
-      { path: '/home', element: <Home /> },
-      { path: '/queryTable', element: <QueryTable /> },
+      { path: 'home', element: <Home /> },
+      { path: 'queryTable', element: <QueryTable /> },
       { path: '*', element: <NoMatch /> },
     ],
   },
