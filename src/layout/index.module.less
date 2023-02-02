@@ -1,44 +1,190 @@
-.layoutContainer {
+.avatar {
+  position: absolute;
+  top: 5px;
+  right: 16px;
+}
+
+.container {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  min-width: 1400px;
   height: 100%;
 }
 
-.header {
+.innerSider,
+.tabContainer {
+  height: 100%;
+}
+
+.siderResizeButton {
+  position: absolute;
+  top: 288px;
+  right: -6px;
+  z-index: 10;
   display: flex;
   align-items: center;
-  height: 46px;
-  padding: 0 24px;
-  background-color: #3e424f;
+  justify-content: center;
+  width: 12px;
+  height: 40px;
+  font-size: 18px;
+  color: #585a5a;
+  cursor: pointer;
+  background-color: #dbdee9;
+  border-radius: 100px;
+  opacity: 0;
 
-  :global {
-    .ant-menu {
-      flex: 1;
-    }
+  &:hover {
+    color: #4571f6;
+    background-color: #eaf0fd;
+    border-color: #4571f6;
+    opacity: 1;
+  }
+}
 
-    .ant-menu.ant-menu-dark,
-    .ant-menu-dark .ant-menu-sub,
-    .ant-menu.ant-menu-dark .ant-menu-sub {
-      background-color: #3e424f;
-    }
+.sider {
+  position: relative;
+  background-color: #fdfdfd;
+  border-right: 1px solid #ebedf4;
 
-    .ant-menu.ant-menu-dark .ant-menu-item-selected,
-    .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
-      background: linear-gradient(to bottom, #2d3039 95%, #2855f0 5%);
+  &:hover {
+    .siderResizeButton {
+      opacity: 1;
     }
   }
 }
 
-.title {
-  margin-right: 64px;
-  font-size: 16px;
-  color: #fff;
-  letter-spacing: 1px;
+.handleDiv {
+  z-index: 5;
 }
 
-.body {
-  flex: 1;
-  padding: 16px;
+.innerSider {
+  overflow-x: hidden;
   overflow-y: auto;
+
+  /* 定义滚动条的轨道，内阴影及圆角 */
+  &::-webkit-scrollbar-track {
+    background-color: #fdfdfd;
+    border-radius: 10px;
+  }
+
+  /* 定义滑块，内阴影及圆角 */
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: background-color 0.5s;
+  }
+
+  // hover 整个容器的时候的颜色
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: rgb(180 180 180);
+  }
+
+  // hover 滑块的颜色
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(160 160 160);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background-color: rgb(120 120 120);
+  }
+}
+
+.closeSiderResizeButton {
+  right: -12px;
+}
+
+.menu {
+  background-color: #fdfdfd;
+  border-inline-end: none !important;
+
+  :global {
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      height: 36px !important;
+      line-height: 36px !important;
+    }
+
+    .ant-menu-item-group-title {
+      font-size: 12px;
+    }
+
+    .ant-menu-item-selected {
+      background-color: #e4eefd !important;
+    }
+  }
+}
+
+.tabContainer {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+
+  :global {
+    .ant-tabs-nav {
+      height: 40px;
+      margin: 0;
+      background-color: #f4f5f9;
+    }
+
+    .ant-tabs,
+    .ant-tabs-content,
+    .ant-tabs-tabpane {
+      height: 100%;
+    }
+
+    .ant-tabs-tabpane {
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+    }
+
+    .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
+    .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
+      padding: 8px 12px;
+      margin-left: 0 !important;
+      background-color: #f4f5f9;
+      border: 1px solid #ebedf4;
+      border-left: none;
+      border-radius: 0;
+      transition: none;
+
+      &:hover {
+        color: #202328;
+        background-color: #ebedf4;
+      }
+    }
+
+    .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
+    .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
+      background-color: #fff;
+      border-bottom-color: #fff;
+
+      &:hover {
+        background-color: #fff;
+      }
+    }
+
+    .ant-tabs-tab-btn {
+      width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ant-tabs-tab-remove {
+      width: 19px;
+      height: 19px;
+      padding: 0;
+      color: #5f6368;
+      border-radius: 19px;
+
+      &:hover {
+        background-color: #f4f5f9;
+      }
+    }
+
+    .ant-tabs > .ant-tabs-nav .ant-tabs-nav-operations,
+    .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-operations {
+      align-items: center;
+      height: 30px;
+    }
+  }
 }

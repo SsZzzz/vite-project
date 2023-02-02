@@ -1,39 +1,101 @@
-import { Menu } from 'antd';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import service from '@/services';
+import { useGlobalStore } from '@/stores/global';
+import { Down, LeftOne, RightOne } from '@icon-park/react';
+import { useLocalStorageState, useRequest } from 'ahooks';
+import { Avatar, Dropdown, Menu, Space } from 'antd';
+import clsx from 'clsx';
+import { Resizable } from 're-resizable';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Tab from './components/Tab';
 import styles from './index.module.less';
+import { getDefaultOpenKeys } from './utils';
 
-const items = [
-  {
-    label: '首页',
-    key: '/home',
-  },
-  {
-    label: '表格查询',
-    key: '/queryTable',
-  },
-];
+let defaultOpenKeys = [];
+
+const dropdownMenuItems = [{ key: 'logout', label: '退出登录' }];
 
 export default () => {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const { menuTree } = useGlobalStore();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const [siderWidth, setSiderWidth] = useLocalStorageState('siderWidth', {
+    defaultValue: 160,
+  });
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if (!menuTree) return;
+    defaultOpenKeys = getDefaultOpenKeys(menuTree);
+  }, [menuTree]);
+
+  const { run: logout } = useRequest(service.logout, {
+    manual: true,
+    onSuccess: () => navigate('/login'),
+  });
+
+  function handleMenuClick({ key }) {
+    if (key === 'logout') logout();
+  }
+
+  function handleSelect({ key }) {
+    navigate(key);
+  }
+
   return (
-    <div className={styles.layoutContainer}>
-      <div className={styles.header}>
-        <div className={styles.title}>
-          <span>同盾科技政企研发后台模板</span>
-        </div>
-        <Menu
-          theme="dark"
-          selectedKeys={[pathname]}
-          mode="horizontal"
-          items={items}
-          onSelect={({ key }) => navigate(key)}
-        />
-      </div>
-      <div className={styles.body}>
-        <Outlet />
-      </div>
+    <div className={styles.container}>
+      {menuTree && (
+        <Resizable
+          className={styles.sider}
+          handleClasses={{ right: styles.handleDiv }}
+          size={{ width: open ? siderWidth : 0, height: '100%' }}
+          minWidth={open ? 130 : 0}
+          maxWidth={240}
+          enable={{ right: open }}
+          onResizeStop={(e, direction, ref, d) =>
+            setSiderWidth(siderWidth + d.width)
+          }
+        >
+          <div
+            style={open ? undefined : { opacity: 1 }}
+            className={clsx(
+              styles.siderResizeButton,
+              !open && styles.closeSiderResizeButton,
+            )}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <LeftOne theme="filled" /> : <RightOne theme="filled" />}
+          </div>
+          <div className={styles.innerSider}>
+            <Menu
+              className={styles.menu}
+              mode="inline"
+              inlineIndent={16}
+              items={menuTree}
+              selectedKeys={[pathname]}
+              defaultOpenKeys={defaultOpenKeys}
+              onSelect={handleSelect}
+            />
+          </div>
+        </Resizable>
+      )}
+      <Tab />
+      <Space className={styles.avatar}>
+        <Avatar size={30}>USER</Avatar>
+        <Dropdown
+          menu={{
+            items: dropdownMenuItems,
+            onClick: handleMenuClick,
+          }}
+        >
+          <Space size={4}>
+            {userInfo?.username}
+            <Down />
+          </Space>
+        </Dropdown>
+      </Space>
     </div>
   );
 };

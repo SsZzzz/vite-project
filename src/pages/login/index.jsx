@@ -1,3 +1,4 @@
+import { useGlobalStore } from '@/stores/global';
 import { Lock, User } from '@icon-park/react';
 import { useRequest } from 'ahooks';
 import { Button, Col, Form, Input, Row, Spin } from 'antd';
@@ -8,6 +9,7 @@ import service from './service';
 export default () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { refreshMenuTree } = useGlobalStore();
 
   const { data, refresh, loading } = useRequest(service.getCaptcha);
 
@@ -16,6 +18,7 @@ export default () => {
     onError: () => refresh(),
     onSuccess: (res) => {
       localStorage.setItem('userInfo', JSON.stringify(res));
+      refreshMenuTree();
       navigate('/home');
     },
   });
