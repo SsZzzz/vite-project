@@ -1,10 +1,12 @@
-export function getDefaultOpenKeys(items, res = []) {
-  if (!items) return;
-  for (const item of items) {
-    if (!item.key.includes('/')) res.push(item.key);
-    getDefaultOpenKeys(item.children, res);
+export function getDefaultOpenKeys(tree, pathname, paths = []) {
+  if (!tree) return;
+  for (const obj of tree) {
+    paths.push(obj.key);
+    if (obj.key === pathname) return paths;
+    const res = getDefaultOpenKeys(obj.children, pathname, paths);
+    if (res?.length) return res;
+    paths.pop();
   }
-  return res;
 }
 
 export function getRoute(routes, pathname) {

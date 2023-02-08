@@ -88,6 +88,18 @@
   }
 }
 
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+
+  & > img {
+    width: 105px;
+    height: 24px;
+  }
+}
+
 .closeSiderResizeButton {
   right: -12px;
 }
@@ -97,18 +109,8 @@
   border-inline-end: none !important;
 
   :global {
-    .ant-menu-item,
-    .ant-menu-submenu-title {
-      height: 36px !important;
-      line-height: 36px !important;
-    }
-
     .ant-menu-item-group-title {
       font-size: 12px;
-    }
-
-    .ant-menu-item-selected {
-      background-color: #e4eefd !important;
     }
   }
 }
@@ -122,7 +124,6 @@
     .ant-tabs-nav {
       height: 40px;
       margin: 0;
-      background-color: #f4f5f9;
     }
 
     .ant-tabs,
@@ -135,29 +136,29 @@
       overflow-x: hidden;
       overflow-y: auto;
       scrollbar-gutter: stable;
+
+      & > div {
+        padding: 16px;
+      }
     }
 
     .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
     .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
       padding: 8px 12px;
       margin-left: 0 !important;
-      background-color: #f4f5f9;
-      border: 1px solid #ebedf4;
+      border-bottom: none;
       border-left: none;
       border-radius: 0;
       transition: none;
 
       &:hover {
-        color: #202328;
-        background-color: #ebedf4;
+        color: rgb(0 0 0 / 88%);
+        background-color: #eee;
       }
     }
 
     .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
     .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
-      background-color: #fff;
-      border-bottom-color: #fff;
-
       &:hover {
         background-color: #fff;
       }
