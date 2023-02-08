@@ -1,4 +1,10 @@
+import { Home, SettingTwo } from '@icon-park/react';
 import axios from 'axios';
+
+const iconObj = {
+  首页: <Home size="18" />,
+  系统设置: <SettingTwo size="18" />,
+};
 
 function getMenuTree(params) {
   return axios
@@ -10,7 +16,7 @@ function logout() {
   return axios.post('/api/auth/user/logout');
 }
 
-function formatMenuTree(tree) {
+function formatMenuTree(tree, level = 0) {
   if (!tree) return;
   const list = [];
   for (const obj of tree) {
@@ -18,7 +24,8 @@ function formatMenuTree(tree) {
     const newObj = {};
     newObj.key = obj.path;
     newObj.label = obj.name;
-    newObj.children = formatMenuTree(obj.children);
+    if (level === 0) newObj.icon = iconObj[obj.name];
+    newObj.children = formatMenuTree(obj.children, level + 1);
     list.push(newObj);
   }
   return list;
