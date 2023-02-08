@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layout';
 import NotFound from './pages/404';
-import DepartmentManagement from './pages/departmentManagement';
 import Home from './pages/home';
 import Login from './pages/login';
 import MenuManagement from './pages/menuManagement';
 import QueryTable from './pages/queryTable';
+import RoleManagement from './pages/roleManagement';
 import UserManagement from './pages/userManagement';
 
 // 使用约定式路由,pages下的文件夹名称为path,自动注册.notBelongLayout例外,比如有些 login 不应该在 layout 下,比如 NotFound 的 path 应该是*,不应该是 NotFound
@@ -33,9 +33,9 @@ export default createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: '/departmentManagement',
-        title: '部门管理',
-        element: <DepartmentManagement />,
+        path: '/roleManagement',
+        title: '角色管理',
+        element: <RoleManagement />,
       },
       { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
       { path: '*', element: <NotFound /> },
