@@ -25,10 +25,10 @@ axios.interceptors.response.use(
     if (response?.data instanceof Blob) {
       return response.data;
     }
-    const { data, success, message: messageText } = response?.data || {};
+    const { success, message: messageText } = response?.data || {};
     if (success) {
-      // 没有数据返回就代表它是增删改,增删改即使请求成功也应该返回消息告知用户
-      if (data === undefined) message.success(messageText);
+      // 增删改即使请求成功也应该返回消息告知用户
+      if (response?.config?.method !== 'get') message.success(messageText);
       return response?.data?.data;
     }
     message.error(messageText);

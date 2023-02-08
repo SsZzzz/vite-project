@@ -1,8 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './layout';
 import NotFound from './pages/404';
+import DepartmentManagement from './pages/departmentManagement';
 import Home from './pages/home';
 import Login from './pages/login';
+import MenuManagement from './pages/menuManagement';
 import QueryTable from './pages/queryTable';
 import UserManagement from './pages/userManagement';
 
@@ -21,9 +23,19 @@ export default createBrowserRouter([
     children: [
       { path: '/home', title: '首页', element: <Home /> },
       {
+        path: '/menuManagement',
+        title: '菜单管理',
+        element: <MenuManagement />,
+      },
+      {
         path: '/userManagement',
         title: '用户管理',
         element: <UserManagement />,
+      },
+      {
+        path: '/departmentManagement',
+        title: '部门管理',
+        element: <DepartmentManagement />,
       },
       { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
       { path: '*', element: <NotFound /> },
