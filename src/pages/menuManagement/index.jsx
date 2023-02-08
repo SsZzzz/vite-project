@@ -92,7 +92,6 @@ export default () => {
       </div>
       <Table
         rowKey="id"
-        size="small"
         dataSource={data}
         columns={columns}
         loading={loading}
@@ -100,7 +99,7 @@ export default () => {
         scroll={{ x: 'max-content' }}
       />
       <Modal
-        title="新增菜单"
+        title="新增/修改菜单"
         open={open}
         confirmLoading={addLoading}
         onOk={addedForm.submit}
