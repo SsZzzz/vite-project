@@ -1,6 +1,6 @@
 import { Button, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import styles from './index.less';
+import styles from './index.module.less';
 
 export default () => {
   const navigate = useNavigate();
