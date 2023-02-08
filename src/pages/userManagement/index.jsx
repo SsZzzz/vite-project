@@ -71,6 +71,7 @@ export default () => {
   const columns = [
     { title: '用户名', dataIndex: 'loginName' },
     { title: '真实姓名', dataIndex: 'realName' },
+    { title: '邮箱', dataIndex: 'email' },
     { title: '手机号码', dataIndex: 'mobile' },
     {
       title: '启用状态',
@@ -131,7 +132,6 @@ export default () => {
       </div>
       <Table
         rowKey="id"
-        size="small"
         dataSource={data?.list}
         columns={columns}
         loading={loading}
