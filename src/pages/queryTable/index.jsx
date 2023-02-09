@@ -62,7 +62,6 @@ export default () => {
           showQuickJumper: true,
           showTotal: (total) => `共 ${total} 条`,
         }}
-        bordered
       />
     </div>
   );
