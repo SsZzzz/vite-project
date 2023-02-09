@@ -33,7 +33,7 @@ export default () => {
         <Col span={14} className={styles.loginImage} />
         <Col span={10} className={styles.formBox}>
           <h1>登录</h1>
-          <Form form={form} name="form" onFinish={onFinish}>
+          <Form form={form} onFinish={onFinish}>
             <Form.Item
               name="email"
               rules={[{ required: true, message: '请输入邮箱' }]}

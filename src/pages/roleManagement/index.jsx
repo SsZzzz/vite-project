@@ -159,7 +159,6 @@ export default () => {
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 20 }}
           form={addedForm}
-          name="addedForm"
           onFinish={handleAdd}
         >
           {/* 编辑时候需要传 */}
