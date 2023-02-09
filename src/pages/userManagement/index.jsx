@@ -74,6 +74,16 @@ export default () => {
     { title: '邮箱', dataIndex: 'email' },
     { title: '手机号码', dataIndex: 'mobile' },
     {
+      title: '角色',
+      dataIndex: 'roles',
+      render: (list) => list.map((obj) => obj.name).toString(),
+    },
+    {
+      title: '部门',
+      dataIndex: 'groups',
+      render: (list) => list.map((obj) => obj.name).toString(),
+    },
+    {
       title: '启用状态',
       dataIndex: 'enabled',
       render: (v, r) => (
@@ -107,7 +117,7 @@ export default () => {
 
   return (
     <div>
-      <Form form={form} name="filter" layout="inline" onFinish={onFinish}>
+      <Form form={form} layout="inline" onFinish={onFinish}>
         <Form.Item label="用户名" name="name">
           <Input placeholder="请输入" allowClear />
         </Form.Item>
@@ -155,7 +165,6 @@ export default () => {
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
           form={addedForm}
-          name="addedForm"
           onFinish={handleAdd}
         >
           <Form.Item
@@ -172,7 +181,7 @@ export default () => {
           >
             <Input placeholder="请输入" />
           </Form.Item>
-          <Form.Item name="email" label="邮箱">
+          <Form.Item name="email" label="邮箱" rules={[{ required: true }]}>
             <Input placeholder="请输入" />
           </Form.Item>
           <Form.Item name="mobile" label="手机号码">
