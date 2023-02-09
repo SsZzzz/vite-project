@@ -1,9 +1,11 @@
-import { Home, SettingTwo } from '@icon-park/react';
+import { Home, SettingTwo, Table } from '@icon-park/react';
 import axios from 'axios';
 
 const iconObj = {
   首页: <Home size="18" />,
   系统设置: <SettingTwo size="18" />,
+  表格查询demo: <Table size="18" />,
+  '表格查询demo(hox)': <Table size="18" />,
 };
 
 function getMenuTree(params) {

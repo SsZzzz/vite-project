@@ -1,7 +1,5 @@
-import { useRequest } from 'ahooks';
 import { Button, DatePicker, Form, Input, Table } from 'antd';
-import { useState } from 'react';
-import service from './service';
+import { StoreProvider, useStore } from './store';
 
 const columns = [
   { title: 'id', dataIndex: 'id' },
@@ -16,13 +14,9 @@ const columns = [
   },
 ];
 
-export default () => {
+function App() {
+  const { params, setParams, data, loading } = useStore();
   const [form] = Form.useForm();
-  const [params, setParams] = useState({ current: 1, pageSize: 10 });
-
-  const { data, loading } = useRequest(() => service.query(params), {
-    refreshDeps: [params],
-  });
 
   function onFinish(values) {
     setParams({ ...params, ...values, current: 1 });
@@ -66,4 +60,10 @@ export default () => {
       />
     </div>
   );
-};
+}
+
+export default () => (
+  <StoreProvider>
+    <App />
+  </StoreProvider>
+);

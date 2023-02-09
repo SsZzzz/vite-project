@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import MenuManagement from './pages/menuManagement';
 import QueryTable from './pages/queryTable';
+import QueryTableWithHox from './pages/queryTableWithHox';
 import RoleManagement from './pages/roleManagement';
 import UserManagement from './pages/userManagement';
 
@@ -22,6 +23,12 @@ export default createBrowserRouter([
     element: <Layout />,
     children: [
       { path: '/home', title: '首页', element: <Home /> },
+      { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
+      {
+        path: '/queryTableWithHox',
+        title: '表格查询demo(hox)',
+        element: <QueryTableWithHox />,
+      },
       {
         path: '/menuManagement',
         title: '菜单管理',
