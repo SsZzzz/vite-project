@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Tab from './components/Tab';
 import styles from './index.module.less';
+// import { getDefaultOpenKeys } from './utils';
 
 const dropdownMenuItems = [{ key: 'logout', label: '退出登录' }];
 
@@ -17,6 +18,7 @@ export default () => {
   const { menuTree } = useGlobalStore();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  // const defaultOpenKeys = getDefaultOpenKeys(menuTree, pathname);
 
   const [siderWidth, setSiderWidth] = useLocalStorageState('siderWidth', {
     defaultValue: 160,
@@ -70,6 +72,7 @@ export default () => {
               inlineIndent={16}
               items={menuTree}
               selectedKeys={[pathname]}
+              // defaultOpenKeys={defaultOpenKeys}
               onSelect={handleSelect}
             />
           </div>
