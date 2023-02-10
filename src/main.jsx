@@ -38,7 +38,8 @@ axios.interceptors.response.use(
     // 超出 2xx 范围的状态码都会触发该函数。
     if (error.response.status === 401) {
       // 401 代表登录失效
-      router.navigate('/login');
+      // router.navigate方法不会添加basename,所有得手动加上basename
+      router.navigate('/base/login');
     }
     return Promise.reject(error);
   },

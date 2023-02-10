@@ -51,6 +51,6 @@ export default createBrowserRouter(
     },
   ],
   {
-    basename: '/base',
+    basename: '/base', // 全局搜索下/base,再替换
   },
 );
