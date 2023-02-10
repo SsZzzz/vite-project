@@ -16,36 +16,41 @@ import UserManagement from './pages/userManagement';
 //   element: <mode.default />,
 // }));
 
-export default createBrowserRouter([
-  { path: '/login', title: '登录', element: <Login /> },
+export default createBrowserRouter(
+  [
+    { path: '/login', title: '登录', element: <Login /> },
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        { path: '/home', title: '首页', element: <Home /> },
+        { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
+        {
+          path: '/queryTableWithHox',
+          title: '表格查询demo(hox)',
+          element: <QueryTableWithHox />,
+        },
+        {
+          path: '/menuManagement',
+          title: '菜单管理',
+          element: <MenuManagement />,
+        },
+        {
+          path: '/userManagement',
+          title: '用户管理',
+          element: <UserManagement />,
+        },
+        {
+          path: '/roleManagement',
+          title: '角色管理',
+          element: <RoleManagement />,
+        },
+        { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
+        { path: '*', element: <NotFound /> },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <Layout />,
-    children: [
-      { path: '/home', title: '首页', element: <Home /> },
-      { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
-      {
-        path: '/queryTableWithHox',
-        title: '表格查询demo(hox)',
-        element: <QueryTableWithHox />,
-      },
-      {
-        path: '/menuManagement',
-        title: '菜单管理',
-        element: <MenuManagement />,
-      },
-      {
-        path: '/userManagement',
-        title: '用户管理',
-        element: <UserManagement />,
-      },
-      {
-        path: '/roleManagement',
-        title: '角色管理',
-        element: <RoleManagement />,
-      },
-      { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
-      { path: '*', element: <NotFound /> },
-    ],
+    basename: '/base',
   },
-]);
+);
