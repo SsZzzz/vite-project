@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5100,
-    open: '/home',
+    open: '/base/home',
     proxy: {
       '/api': {
         target: 'http://10.57.240.77:8080',
