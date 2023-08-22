@@ -35,8 +35,8 @@ export default () => {
           <h1>登录</h1>
           <Form form={form} onFinish={onFinish}>
             <Form.Item
-              name="email"
-              rules={[{ required: true, message: '请输入邮箱' }]}
+              name="account"
+              rules={[{ required: true, message: '请输入账号' }]}
             >
               <Input
                 size="large"

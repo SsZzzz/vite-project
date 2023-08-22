@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function query() {
-  return axios.get('/api/auth/permissions/tree');
+  return axios.get('/api/auth/permissions/tree', { params: { kind: 1 } });
 }
 
 function add(data) {

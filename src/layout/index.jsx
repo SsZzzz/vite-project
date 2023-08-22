@@ -88,7 +88,7 @@ export default () => {
           }}
         >
           <Space size={4}>
-            {userInfo?.username}
+            {userInfo?.nickname}
             <Down />
           </Space>
         </Dropdown>

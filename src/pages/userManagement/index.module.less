@@ -1,0 +1,54 @@
+.userContainer {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.left {
+  width: 400px;
+  overflow: auto;
+}
+
+.right {
+  flex: 1;
+  overflow: auto;
+}
+
+.breadcrumbBox {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  color: rgb(0 0 0 / 45%);
+  border-bottom: 1px solid #f0f0f0;
+
+  & > div {
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: rgb(0 0 0 / 4%);
+    }
+
+    &:not(:last-child)::after {
+      margin-left: 8px;
+      content: '>';
+    }
+  }
+}
+
+.org {
+  padding: 4px;
+  margin-bottom: 0.2em;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: rgb(0 0 0 / 4%);
+  }
+}
+
+.active {
+  background-color: #e6f4ff !important;
+}

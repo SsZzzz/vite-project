@@ -1,21 +1,15 @@
-import { Home, SettingTwo, Table } from '@icon-park/react';
 import axios from 'axios';
 
-const iconObj = {
-  首页: <Home size="18" />,
-  系统设置: <SettingTwo size="18" />,
-  表格查询demo: <Table size="18" />,
-  '表格查询demo(hox)': <Table size="18" />,
-};
+const iconObj = {};
 
 function getMenuTree(params) {
   return axios
-    .get('/api/auth/permissions/tree', { params })
+    .get('/api/auth/permissions/tree', { params: { kind: 1 } })
     .then((res) => formatMenuTree(res));
 }
 
 function logout() {
-  return axios.post('/api/auth/user/logout');
+  return axios.post('/api/auth/logout');
 }
 
 function formatMenuTree(tree, level = 0) {

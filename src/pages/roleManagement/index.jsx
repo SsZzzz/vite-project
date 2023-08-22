@@ -1,48 +1,39 @@
-import { Delete, Editor, Plus } from '@icon-park/react';
+import { Close, Delete, Editor, Plus } from '@icon-park/react';
 import { useRequest } from 'ahooks';
 import {
   Button,
+  Drawer,
   Form,
   Input,
-  Modal,
   Popconfirm,
   Space,
   Table,
-  Tree,
+  TreeSelect,
 } from 'antd';
 import { useState } from 'react';
-import styles from './index.module.less';
 import service from './service';
 
+const { TextArea } = Input;
+
 export default () => {
+  const [form] = Form.useForm();
   const [addedForm] = Form.useForm();
 
+  const [params, setParams] = useState({ current: 1, pageSize: 10 });
   const [open, setOpen] = useState(false);
-  const [checkedKeys, setCheckedKeys] = useState([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-  const { data: menuTree } = useRequest(service.getPermissionsTree);
-  const {
-    data: roleList,
-    loading,
-    refresh,
-  } = useRequest(service.query, {
-    onSuccess: (res) => {
-      const index = res.findIndex((obj) => obj.id === selectedRowKeys[0]);
-      if (index < 0) handleRowSelect(res[0] || {});
-    },
+  const { data, loading, refresh } = useRequest(() => service.query(params), {
+    refreshDeps: [params],
+  });
+  const { data: menuTree } = useRequest(service.queryMenuTree);
+  const { runAsync: queryMenuList } = useRequest(service.queryMenuList, {
+    manual: true,
   });
   const { run: add, loading: addLoading } = useRequest(service.add, {
     manual: true,
     onSuccess: () => {
       refresh();
-      handleModalClose();
-    },
-  });
-  const { run: addPermissions } = useRequest(service.addPermissions, {
-    manual: true,
-    onError: (e, { roleId }) => {
-      setCheckedKeysByRole(roleId);
+      handleClose();
     },
   });
   const { run: del } = useRequest(service.del, {
@@ -51,41 +42,30 @@ export default () => {
       refresh();
     },
   });
-  const { run: setCheckedKeysByRole } = useRequest(service.getPermissions, {
-    manual: true,
-    onSuccess: (res) => {
-      setCheckedKeys(res);
-    },
-  });
 
-  function handleModalClose() {
+  function onFinish(values) {
+    setParams({ ...params, ...values, current: 1 });
+  }
+
+  function handleTableChange({ current, pageSize }, filters, { field, order }) {
+    setParams({ ...params, current, pageSize, field, order });
+  }
+
+  function handleClose() {
     setOpen(false);
     addedForm.resetFields();
   }
 
-  function handleAdd(values) {
-    add(values);
-  }
-
-  function handleEdit(record) {
+  async function handleEdit(data) {
     setOpen(true);
-    addedForm.setFieldsValue(record);
-  }
-
-  function handleRowSelect({ id }) {
-    if (!id) return;
-    setSelectedRowKeys([id]);
-    setCheckedKeysByRole(id);
-  }
-
-  function handleAddPermissions() {
-    const roleId = selectedRowKeys[0];
-    addPermissions({ roleId, ids: checkedKeys });
+    const list = await queryMenuList(data.id);
+    const defaultData = { ...data, permissionIds: list };
+    addedForm.setFieldsValue(defaultData);
   }
 
   const columns = [
-    { title: '名称', dataIndex: 'name' },
-    { title: '描述', dataIndex: 'description' },
+    { title: '角色名称', dataIndex: 'name' },
+    { title: '角色描述', dataIndex: 'description' },
     {
       title: '操作',
       dataIndex: 'operation',
@@ -106,76 +86,95 @@ export default () => {
   ];
 
   return (
-    <div className={styles.userContainer}>
-      <div>
-        <Button type="primary" icon={<Plus />} onClick={() => setOpen(true)}>
-          新增
-        </Button>
-        <Table
-          className={styles.table}
-          rowKey="id"
-          dataSource={roleList}
-          columns={columns}
-          loading={loading}
-          pagination={false}
-          onRow={(record) => ({
-            onClick: () => handleRowSelect(record),
-          })}
-          rowSelection={{
-            type: 'radio',
-            onSelect: handleRowSelect,
-            selectedRowKeys,
-          }}
-        />
-      </div>
-      <div>
-        <Button
-          style={{ marginBottom: 16 }}
-          type="primary"
-          onClick={handleAddPermissions}
-        >
-          保存修改
-        </Button>
-        {menuTree && (
-          <Tree
-            treeData={menuTree}
-            fieldNames={{ title: 'name', key: 'id' }}
-            selectable={false}
-            checkedKeys={checkedKeys}
-            onCheck={setCheckedKeys}
-            defaultExpandAll
-            checkable
-          />
-        )}
-      </div>
-      <Modal
+    <div>
+      <Form form={form} layout="inline" onFinish={onFinish}>
+        <Form.Item label="角色名称" name="keyword">
+          <Input style={{ width: 180 }} placeholder="请输入" allowClear />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            搜索
+          </Button>
+        </Form.Item>
+      </Form>
+      <Button
+        style={{ marginBottom: 16 }}
+        type="primary"
+        icon={<Plus />}
+        onClick={() => setOpen(true)}
+      >
+        新增
+      </Button>
+      <Table
+        rowKey="id"
+        dataSource={data?.list}
+        columns={columns}
+        loading={loading}
+        onChange={handleTableChange}
+        pagination={{
+          current: params.current,
+          pageSize: params.pageSize,
+          total: data?.total,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          showTotal: (total) => `共 ${total} 条`,
+        }}
+        scroll={{ x: 'max-content' }}
+      />
+      <Drawer
         title="新增/修改角色"
+        placement="right"
+        width={600}
+        onClose={handleClose}
         open={open}
-        confirmLoading={addLoading}
-        onOk={addedForm.submit}
-        onCancel={handleModalClose}
+        closable={false}
+        extra={<Button type="text" icon={<Close />} onClick={handleClose} />}
       >
         <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 20 }}
+          labelCol={{ flex: '80px' }}
+          wrapperCol={{ flex: 'auto' }}
           form={addedForm}
-          onFinish={handleAdd}
+          onFinish={add}
         >
           {/* 编辑时候需要传 */}
           <Form.Item name="id" hidden>
             <Input />
           </Form.Item>
-          <Form.Item name="name" label="名称" rules={[{ required: true }]}>
+          <Form.Item name="name" label="角色名称" rules={[{ required: true }]}>
             <Input placeholder="请输入" />
           </Form.Item>
-          <Form.Item name="code" label="code" rules={[{ required: true }]}>
+          <Form.Item name="code" label="角色代码" rules={[{ required: true }]}>
             <Input placeholder="请输入" />
           </Form.Item>
-          <Form.Item name="description" label="描述">
-            <Input placeholder="请输入" />
+          <Form.Item
+            name="permissionIds"
+            label="菜单权限"
+            rules={[{ required: true }]}
+          >
+            <TreeSelect
+              placeholder="请选择"
+              treeData={menuTree}
+              fieldNames={{ label: 'name', value: 'id' }}
+              treeNodeFilterProp="name"
+              treeCheckable
+              showSearch
+            />
           </Form.Item>
+          <Form.Item
+            name="description"
+            label="角色描述"
+            rules={[{ required: true }]}
+          >
+            <TextArea rows={4} placeholder="请输入" />
+          </Form.Item>
+          <Space size={16}>
+            <Button type="primary" htmlType="submit" loading={addLoading}>
+              确定
+            </Button>
+            <Button onClick={handleClose}>取消</Button>
+          </Space>
         </Form>
-      </Modal>
+      </Drawer>
     </div>
   );
 };

@@ -1,19 +1,19 @@
 import axios from 'axios';
 
-function getPermissionsTree() {
-  return axios.get('/api/auth/permissions/tree');
+function query(params) {
+  return axios.get('/api/auth/roles', { params });
 }
 
-function getPermissions(roleId) {
-  return axios
-    .get(`/api/auth/roles/${roleId}/permissions`)
-    .then((res) => (res || []).map((obj) => obj.permissionId));
+function queryMenuTree() {
+  return axios.get('/api/auth/permissions/tree', { params: { kind: 1 } });
 }
 
-function query() {
+function queryMenuList(id) {
   return axios
-    .get('/api/auth/roles', { params: { pageSize: 100 } })
-    .then((res) => res.list);
+    .get(`/api/auth/roles/${id}/permissions`, {
+      params: { kind: 1, pageSize: 10000 },
+    })
+    .then((res) => (res?.list || []).map((obj) => obj.id));
 }
 
 function add(data) {
@@ -26,16 +26,10 @@ function del(roleId) {
   return axios.delete(`/api/auth/roles/${roleId}`);
 }
 
-function addPermissions(data) {
-  const { roleId, ids } = data;
-  return axios.post(`/api/auth/roles/${roleId}/permissions`, { ids });
-}
-
 export default {
-  getPermissionsTree,
-  getPermissions,
   query,
+  queryMenuTree,
+  queryMenuList,
   add,
   del,
-  addPermissions,
 };

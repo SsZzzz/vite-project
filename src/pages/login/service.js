@@ -5,7 +5,7 @@ function getCaptcha(params) {
 }
 
 function login(data) {
-  return axios.post('/api/auth/user/login', data);
+  return axios.post('/api/auth/login/account', data);
 }
 
 export default { getCaptcha, login };

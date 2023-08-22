@@ -45,7 +45,6 @@ export default createBrowserRouter(
           title: '角色管理',
           element: <RoleManagement />,
         },
-        { path: '/queryTable', title: '表格查询demo', element: <QueryTable /> },
         { path: '*', element: <NotFound /> },
       ],
     },

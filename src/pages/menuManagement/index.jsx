@@ -1,13 +1,13 @@
 import { getFullPath } from '@/utils';
-import { Delete, Editor, Plus } from '@icon-park/react';
+import { Close, Delete, Editor, Plus } from '@icon-park/react';
 import { useRequest } from 'ahooks';
 import {
   Button,
   Cascader,
+  Drawer,
   Form,
   Input,
   InputNumber,
-  Modal,
   Popconfirm,
   Select,
   Space,
@@ -33,7 +33,7 @@ export default () => {
     manual: true,
     onSuccess: () => {
       refresh();
-      handleModalClose();
+      handleClose();
     },
   });
   const { run: del } = useRequest(service.del, {
@@ -43,7 +43,7 @@ export default () => {
     },
   });
 
-  function handleModalClose() {
+  function handleClose() {
     setOpen(false);
     addedForm.resetFields();
   }
@@ -98,16 +98,18 @@ export default () => {
         pagination={false}
         scroll={{ x: 'max-content' }}
       />
-      <Modal
+      <Drawer
         title="新增/修改菜单"
+        placement="right"
+        width={600}
+        onClose={handleClose}
         open={open}
-        confirmLoading={addLoading}
-        onOk={addedForm.submit}
-        onCancel={handleModalClose}
+        closable={false}
+        extra={<Button type="text" icon={<Close />} onClick={handleClose} />}
       >
         <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 20 }}
+          labelCol={{ flex: '110px' }}
+          wrapperCol={{ flex: 'auto' }}
           form={addedForm}
           onFinish={handleAdd}
         >
@@ -130,7 +132,7 @@ export default () => {
             name="code"
             label="code"
             rules={[{ required: true }]}
-            tooltip="随便填,暂时没用"
+            tooltip="暂时没用,和key保持一致"
           >
             <Input placeholder="请输入" />
           </Form.Item>
@@ -150,8 +152,14 @@ export default () => {
           <Form.Item name="sort" label="排列序号" tooltip="建议 10 的倍数">
             <InputNumber placeholder="请输入" />
           </Form.Item>
+          <Space size={16}>
+            <Button type="primary" htmlType="submit" loading={addLoading}>
+              确定
+            </Button>
+            <Button onClick={handleClose}>取消</Button>
+          </Space>
         </Form>
-      </Modal>
+      </Drawer>
     </div>
   );
 };
