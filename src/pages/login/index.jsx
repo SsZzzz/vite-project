@@ -1,4 +1,5 @@
 import { useGlobalStore } from '@/stores/global';
+import { setRequestHeaderToken } from '@/utils';
 import { Lock, User } from '@icon-park/react';
 import { useRequest } from 'ahooks';
 import { Button, Col, Form, Input, Row, Spin } from 'antd';
@@ -18,6 +19,7 @@ export default () => {
     onError: () => refresh(),
     onSuccess: (res) => {
       localStorage.setItem('userInfo', JSON.stringify(res));
+      setRequestHeaderToken();
       refreshMenuTree();
       navigate('/home');
     },
@@ -36,7 +38,7 @@ export default () => {
           <Form form={form} onFinish={onFinish}>
             <Form.Item
               name="account"
-              rules={[{ required: true, message: '请输入账号' }]}
+              rules={[{ required: true, message: '请输入邮箱' }]}
             >
               <Input
                 size="large"
